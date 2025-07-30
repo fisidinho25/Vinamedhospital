@@ -1,0 +1,275 @@
+{% extends "base.html" %}
+
+{% block title %}{{ doctor.name }} - Vinamed Safeway Specialist Hospital{% endblock %}
+
+{% block content %}
+<!-- Doctor Profile Header -->
+<section class="bg-primary text-white py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-3 text-center mb-4 mb-lg-0">
+                <img src="{{ doctor.image_url }}" alt="{{ doctor.name }}" 
+                     class="img-fluid rounded-circle doctor-profile-image border border-4 border-white">
+            </div>
+            <div class="col-lg-9">
+                <div class="d-flex align-items-center mb-3">
+                    <h1 class="display-5 fw-bold mb-0 me-3">{{ doctor.name }}</h1>
+                    <span class="badge bg-light text-primary fs-6">{{ doctor.experience_years }}+ Years</span>
+                </div>
+                <h3 class="h4 mb-3 text-light">{{ doctor.specialization }}</h3>
+                <p class="lead mb-3">{{ doctor.qualifications }}</p>
+                <div class="d-flex flex-wrap gap-3">
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-hospital me-2"></i>
+                        <span>{{ doctor.department.name }}</span>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-clock me-2"></i>
+                        <span>{{ doctor.consultation_hours }}</span>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-calendar me-2"></i>
+                        <span>{{ doctor.available_days.replace(',', ', ') }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Doctor Details -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <!-- About Section -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body p-4">
+                        <h3 class="card-title text-primary mb-4">
+                            <i class="fas fa-user-md me-2"></i>About {{ doctor.name.split()[-1] if doctor.name.split() else 'Doctor' }}
+                        </h3>
+                        <p class="text-muted">{{ doctor.bio }}</p>
+                        
+                        <div class="row mt-4">
+                            <div class="col-md-6">
+                                <h6 class="text-dark mb-3">Qualifications & Certifications</h6>
+                                <ul class="list-unstyled">
+                                    {% for qualification in doctor.qualifications.split(', ') %}
+                                    <li class="mb-2">
+                                        <i class="fas fa-graduation-cap text-primary me-2"></i>
+                                        {{ qualification }}
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="text-dark mb-3">Experience & Expertise</h6>
+                                <ul class="list-unstyled">
+                                    <li class="mb-2">
+                                        <i class="fas fa-award text-primary me-2"></i>
+                                        {{ doctor.experience_years }}+ years of clinical experience
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-stethoscope text-primary me-2"></i>
+                                        Specialist in {{ doctor.specialization }}
+                                    </li>
+                                    <li class="mb-2">
+                                        <i class="fas fa-hospital text-primary me-2"></i>
+                                        {{ doctor.department.name }} Department
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Services Offered -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body p-4">
+                        <h3 class="card-title text-primary mb-4">
+                            <i class="fas fa-medical-kit me-2"></i>Services Offered
+                        </h3>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ul class="list-unstyled">
+                                    {% if doctor.specialization == 'Emergency Medicine' %}
+                                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Emergency Medical Care</li>
+                                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Trauma Management</li>
+                                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Critical Care Medicine</li>
+                                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Emergency Procedures</li>
+                                    {% elif doctor.specialization == 'Cardiology' %}
+                                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Cardiac Consultations</li>
+                                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Echocardiography</li>
+                                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Stress Testing</li>
+                                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Cardiac Catheterization</li>
+                                    {% elif doctor.specialization == 'Pediatrics' %}
+                                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Child Health Checkups</li>
+                                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Immunizations</li>
+                                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Growth & Development</li>
+                                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Pediatric Treatment</li>
+                                    {% elif doctor.specialization == 'Orthopedic Surgery' %}
+                                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Joint Replacement Surgery</li>
+                                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Sports Medicine</li>
+                                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Fracture Treatment</li>
+                                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Arthroscopic Surgery</li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <ul class="list-unstyled">
+                                    {% if doctor.specialization == 'Emergency Medicine' %}
+                                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Life Support Services</li>
+                                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Emergency Surgery</li>
+                                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Resuscitation</li>
+                                    {% elif doctor.specialization == 'Cardiology' %}
+                                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Heart Disease Prevention</li>
+                                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Pacemaker Management</li>
+                                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Cardiac Rehabilitation</li>
+                                    {% elif doctor.specialization == 'Pediatrics' %}
+                                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Adolescent Medicine</li>
+                                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Behavioral Health</li>
+                                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Nutrition Counseling</li>
+                                    {% elif doctor.specialization == 'Orthopedic Surgery' %}
+                                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Spine Surgery</li>
+                                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Hand Surgery</li>
+                                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Rehabilitation Services</li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <!-- Appointment Booking -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body p-4 text-center">
+                        <h5 class="card-title text-primary mb-3">Book an Appointment</h5>
+                        <p class="text-muted mb-4">Schedule your consultation with {{ doctor.name.split()[1] if len(doctor.name.split()) > 1 else 'the doctor' }}</p>
+                        <a href="{{ url_for('appointments') }}" class="btn btn-primary btn-lg w-100 mb-3">
+                            <i class="fas fa-calendar-plus me-2"></i>Book Now
+                        </a>
+                        <div class="text-muted small">
+                            <i class="fas fa-clock me-1"></i>Usually responds within 24 hours
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Availability -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body p-4">
+                        <h6 class="card-title text-primary mb-3">
+                            <i class="fas fa-calendar-check me-2"></i>Availability
+                        </h6>
+                        <div class="mb-3">
+                            <strong class="text-dark">Days:</strong>
+                            <p class="mb-0">{{ doctor.available_days.replace(',', ', ') }}</p>
+                        </div>
+                        <div class="mb-3">
+                            <strong class="text-dark">Hours:</strong>
+                            <p class="mb-0">{{ doctor.consultation_hours }}</p>
+                        </div>
+                        {% if doctor.specialization == 'Emergency Medicine' %}
+                        <div class="alert alert-info mb-0">
+                            <i class="fas fa-info-circle me-1"></i>
+                            <small>Available for emergency consultations 24/7</small>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Contact Information -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body p-4">
+                        <h6 class="card-title text-primary mb-3">
+                            <i class="fas fa-phone me-2"></i>Contact Information
+                        </h6>
+                        <div class="mb-3">
+                            <strong class="text-dark">Department:</strong>
+                            <p class="mb-0">{{ doctor.department.name }}</p>
+                        </div>
+                        <div class="mb-3">
+                            <strong class="text-dark">Hospital Phone:</strong>
+                            <p class="mb-0">
+                                <a href="tel:+1234567890" class="text-decoration-none">(123) 456-7890</a>
+                            </p>
+                        </div>
+                        <div class="mb-0">
+                            <strong class="text-dark">Location:</strong>
+                            <p class="mb-0">123 Healthcare Ave<br>Medical City, MC 12345</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Emergency Notice -->
+                {% if doctor.specialization != 'Emergency Medicine' %}
+                <div class="card border-danger bg-danger bg-opacity-10 mb-4">
+                    <div class="card-body p-4 text-center">
+                        <i class="fas fa-exclamation-triangle text-danger fa-2x mb-2"></i>
+                        <h6 class="text-danger mb-2">Emergency?</h6>
+                        <p class="small text-danger mb-3">For medical emergencies, call 911 or visit our Emergency Department immediately.</p>
+                        <a href="tel:911" class="btn btn-danger btn-sm">
+                            <i class="fas fa-phone me-1"></i>Call 911
+                        </a>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Related Doctors -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-6 fw-bold text-primary">Other Doctors in {{ doctor.department.name }}</h2>
+            <p class="lead text-muted">Meet other specialists in our {{ doctor.department.name }} department</p>
+        </div>
+        
+        <div class="row">
+            {% for related_doctor in doctor.department.doctors[:3] %}
+                {% if related_doctor.id != doctor.id %}
+                <div class="col-lg-4 mb-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <img src="{{ related_doctor.image_url }}" alt="{{ related_doctor.name }}" 
+                             class="card-img-top related-doctor-image">
+                        <div class="card-body text-center">
+                            <h6 class="card-title text-primary">{{ related_doctor.name }}</h6>
+                            <p class="text-muted mb-2">{{ related_doctor.specialization }}</p>
+                            <a href="{{ url_for('doctor_profile', doctor_id=related_doctor.id) }}" 
+                               class="btn btn-outline-primary btn-sm">
+                                View Profile
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="{{ url_for('doctors', department_id=doctor.department.id) }}" class="btn btn-primary">
+                View All {{ doctor.department.name }} Doctors
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.doctor-profile-image {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}
+
+.related-doctor-image {
+    height: 200px;
+    object-fit: cover;
+}
+</style>
+{% endblock %}
