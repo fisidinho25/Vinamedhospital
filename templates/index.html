@@ -1,0 +1,248 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section position-relative overflow-hidden">
+    <div class="container-fluid p-0">
+        <div class="row g-0">
+            <div class="col-lg-6">
+                <div class="hero-content p-5 h-100 d-flex align-items-center bg-light">
+                    <div>
+                        <h1 class="display-4 fw-bold text-primary mb-4">Excellence in Healthcare</h1>
+                        <p class="lead mb-4">At CarePoint Hospital, we provide compassionate, comprehensive medical care with state-of-the-art facilities and experienced healthcare professionals.</p>
+                        <div class="d-flex gap-3 flex-wrap">
+                            <a href="{{ url_for('appointments') }}" class="btn btn-primary btn-lg">
+                                <i class="fas fa-calendar-plus me-2"></i>Book Appointment
+                            </a>
+                            <a href="{{ url_for('contact') }}" class="btn btn-outline-primary btn-lg">
+                                <i class="fas fa-map-marker-alt me-2"></i>Find Us
+                            </a>
+                        </div>
+                        
+                        <!-- Key Features -->
+                        <div class="row mt-5">
+                            <div class="col-sm-4 text-center">
+                                <div class="feature-item">
+                                    <i class="fas fa-clock text-primary fa-2x mb-2"></i>
+                                    <h6>24/7 Emergency</h6>
+                                    <small class="text-muted">Round-the-clock care</small>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 text-center">
+                                <div class="feature-item">
+                                    <i class="fas fa-user-md text-primary fa-2x mb-2"></i>
+                                    <h6>Expert Doctors</h6>
+                                    <small class="text-muted">Experienced specialists</small>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 text-center">
+                                <div class="feature-item">
+                                    <i class="fas fa-hospital text-primary fa-2x mb-2"></i>
+                                    <h6>Modern Facilities</h6>
+                                    <small class="text-muted">Advanced equipment</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="hero-image h-100 position-relative">
+                    <img src="https://pixabay.com/get/gc4fce2c7737de47eaa8cbce1b35ef4f65a83509aaab770ae3aa141ba15de8cecb7244abec6ecad92669da1bb218b601bf5870336eb6a39095c5ceaca8627f39d_1280.jpg" 
+                         alt="CarePoint Hospital Building" class="img-fluid w-100 h-100 object-fit-cover">
+                    <div class="position-absolute bottom-0 start-0 end-0 bg-gradient-dark p-4">
+                        <h4 class="text-white mb-2">State-of-the-Art Facility</h4>
+                        <p class="text-white-50 mb-0">Modern healthcare in a comfortable environment</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Quick Stats -->
+<section class="py-5 bg-primary text-white">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="stat-item">
+                    <i class="fas fa-users fa-3x mb-3"></i>
+                    <h3 class="fw-bold">50,000+</h3>
+                    <p>Patients Served</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="stat-item">
+                    <i class="fas fa-user-md fa-3x mb-3"></i>
+                    <h3 class="fw-bold">100+</h3>
+                    <p>Expert Doctors</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="stat-item">
+                    <i class="fas fa-procedures fa-3x mb-3"></i>
+                    <h3 class="fw-bold">15,000+</h3>
+                    <p>Successful Surgeries</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="stat-item">
+                    <i class="fas fa-award fa-3x mb-3"></i>
+                    <h3 class="fw-bold">25+</h3>
+                    <p>Years of Excellence</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Our Departments -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-6 fw-bold text-primary">Our Departments</h2>
+            <p class="lead text-muted">Comprehensive medical services across multiple specialties</p>
+        </div>
+        
+        <div class="row">
+            {% for department in departments %}
+            <div class="col-lg-6 mb-4">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img src="{{ department.image_url }}" alt="{{ department.name }}" 
+                                 class="img-fluid rounded-start h-100 object-fit-cover">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title text-primary">{{ department.name }}</h5>
+                                <p class="card-text">{{ department.description[:100] }}...</p>
+                                <a href="{{ url_for('doctors', department_id=department.id) }}" class="btn btn-outline-primary">
+                                    View Doctors <i class="fas fa-arrow-right ms-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="{{ url_for('departments') }}" class="btn btn-primary">
+                View All Departments <i class="fas fa-arrow-right ms-1"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Doctors -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-6 fw-bold text-primary">Meet Our Doctors</h2>
+            <p class="lead text-muted">Experienced healthcare professionals dedicated to your well-being</p>
+        </div>
+        
+        <div class="row">
+            {% for doctor in doctors %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100 shadow-sm border-0 text-center">
+                    <div class="position-relative">
+                        <img src="{{ doctor.image_url }}" alt="Dr. {{ doctor.name }}" 
+                             class="card-img-top doctor-image">
+                        <div class="position-absolute top-0 end-0 m-3">
+                            <span class="badge bg-primary">{{ doctor.experience_years }}+ Years</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">{{ doctor.name }}</h5>
+                        <p class="text-muted mb-2">{{ doctor.specialization }}</p>
+                        <p class="card-text small">{{ doctor.bio[:80] }}...</p>
+                        <a href="{{ url_for('doctor_profile', doctor_id=doctor.id) }}" class="btn btn-outline-primary">
+                            View Profile
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="{{ url_for('doctors') }}" class="btn btn-primary">
+                View All Doctors <i class="fas fa-arrow-right ms-1"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Latest News -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-6 fw-bold text-primary">Latest News</h2>
+            <p class="lead text-muted">Stay updated with our latest announcements and health tips</p>
+        </div>
+        
+        <div class="row">
+            {% for news_item in news %}
+            <div class="col-lg-4 mb-4">
+                <div class="card h-100 shadow-sm border-0">
+                    <img src="{{ news_item.image_url }}" alt="{{ news_item.title }}" class="card-img-top news-image">
+                    <div class="card-body">
+                        <small class="text-muted">{{ news_item.published_date.strftime('%B %d, %Y') }}</small>
+                        <h6 class="card-title mt-2">{{ news_item.title }}</h6>
+                        <p class="card-text">{{ news_item.summary }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="{{ url_for('news') }}" class="btn btn-primary">
+                View All News <i class="fas fa-arrow-right ms-1"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="py-5 bg-primary text-white">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h3 class="fw-bold mb-2">Ready to Schedule Your Appointment?</h3>
+                <p class="mb-0">Take the first step towards better health. Our medical team is here to help you.</p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <a href="{{ url_for('appointments') }}" class="btn btn-light btn-lg">
+                    <i class="fas fa-calendar-plus me-2"></i>Book Now
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.hero-image {
+    min-height: 500px;
+}
+.doctor-image {
+    height: 250px;
+    object-fit: cover;
+}
+.news-image {
+    height: 200px;
+    object-fit: cover;
+}
+.bg-gradient-dark {
+    background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+}
+.object-fit-cover {
+    object-fit: cover;
+}
+</style>
+{% endblock %}
