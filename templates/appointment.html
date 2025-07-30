@@ -1,0 +1,287 @@
+{% extends "base.html" %}
+
+{% block title %}Book Appointment - Vinamed Safeway Specialist Hospital{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="bg-primary text-white py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h1 class="display-5 fw-bold mb-3">Book an Appointment</h1>
+                <p class="lead mb-0">Schedule your consultation with our expert medical professionals. We're here to provide you with the best possible care.</p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <i class="fas fa-calendar-plus fa-5x opacity-50"></i>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Appointment Form -->
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card border-0 shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0">
+                            <i class="fas fa-calendar-check me-2"></i>Appointment Request Form
+                        </h4>
+                    </div>
+                    <div class="card-body p-5">
+                        <form method="POST" action="{{ url_for('appointments') }}">
+                            {{ form.hidden_tag() }}
+                            
+                            <!-- Personal Information -->
+                            <div class="mb-4">
+                                <h5 class="text-primary mb-3">Personal Information</h5>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        {{ form.patient_name.label(class="form-label fw-bold") }}
+                                        {{ form.patient_name(class="form-control" + (" is-invalid" if form.patient_name.errors else "")) }}
+                                        {% for error in form.patient_name.errors %}
+                                            <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        {{ form.patient_email.label(class="form-label fw-bold") }}
+                                        {{ form.patient_email(class="form-control" + (" is-invalid" if form.patient_email.errors else "")) }}
+                                        {% for error in form.patient_email.errors %}
+                                            <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="col-12 mb-3">
+                                    {{ form.patient_phone.label(class="form-label fw-bold") }}
+                                    {{ form.patient_phone(class="form-control" + (" is-invalid" if form.patient_phone.errors else ""), placeholder="(123) 456-7890") }}
+                                    {% for error in form.patient_phone.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                            <!-- Appointment Details -->
+                            <div class="mb-4">
+                                <h5 class="text-primary mb-3">Appointment Details</h5>
+                                <div class="row">
+                                    <div class="col-12 mb-3">
+                                        {{ form.doctor_id.label(class="form-label fw-bold") }}
+                                        {{ form.doctor_id(class="form-select" + (" is-invalid" if form.doctor_id.errors else "")) }}
+                                        {% for error in form.doctor_id.errors %}
+                                            <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                        <div class="form-text">Select the doctor you would like to consult with.</div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        {{ form.appointment_date.label(class="form-label fw-bold") }}
+                                        {{ form.appointment_date(class="form-control" + (" is-invalid" if form.appointment_date.errors else "")) }}
+                                        {% for error in form.appointment_date.errors %}
+                                            <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                        <div class="form-text">Please select a date at least 24 hours in advance.</div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        {{ form.appointment_time.label(class="form-label fw-bold") }}
+                                        {{ form.appointment_time(class="form-select" + (" is-invalid" if form.appointment_time.errors else "")) }}
+                                        {% for error in form.appointment_time.errors %}
+                                            <div class="invalid-feedback">{{ error }}</div>
+                                        {% endfor %}
+                                        <div class="form-text">Choose your preferred time slot.</div>
+                                    </div>
+                                </div>
+                                <div class="col-12 mb-3">
+                                    {{ form.reason.label(class="form-label fw-bold") }}
+                                    {{ form.reason(class="form-control" + (" is-invalid" if form.reason.errors else ""), rows="4", placeholder="Please describe the reason for your visit or any symptoms you're experiencing...") }}
+                                    {% for error in form.reason.errors %}
+                                        <div class="invalid-feedback">{{ error }}</div>
+                                    {% endfor %}
+                                    <div class="form-text">This helps our medical team prepare for your visit.</div>
+                                </div>
+                            </div>
+
+                            <!-- Terms and Conditions -->
+                            <div class="mb-4">
+                                <div class="card bg-light">
+                                    <div class="card-body">
+                                        <h6 class="card-title">
+                                            <i class="fas fa-info-circle text-primary me-2"></i>Important Information
+                                        </h6>
+                                        <ul class="mb-0 small">
+                                            <li>Appointment requests are subject to doctor availability and will be confirmed within 24 hours.</li>
+                                            <li>Please arrive 15 minutes early for your appointment to complete any necessary paperwork.</li>
+                                            <li>Bring a valid ID and insurance card to your appointment.</li>
+                                            <li>For emergencies, please call xxxxxx or visit our Emergency Department immediately.</li>
+                                            <li>Cancellations must be made at least 24 hours in advance.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="fas fa-calendar-check me-2"></i>Submit Appointment Request
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar Information -->
+            <div class="col-lg-4">
+                <!-- Contact Information -->
+                <div class="card border-0 shadow mb-4">
+                    <div class="card-body p-4">
+                        <h6 class="card-title text-primary mb-3">
+                            <i class="fas fa-phone me-2"></i>Need Help?
+                        </h6>
+                        <p class="mb-3">If you need assistance with booking your appointment, please contact us:</p>
+                        <div class="mb-2">
+                            <strong>Phone:</strong>
+                            <a href="tel:+1234567890" class="text-decoration-none">(123) 456-7890</a>
+                        </div>
+                        <div class="mb-2">
+                            <strong>Email:</strong>
+                            <a href="mailto:appointments@carepoint.com" class="text-decoration-none">appointments@carepoint.com</a>
+                        </div>
+                        <div class="mb-0">
+                            <strong>Hours:</strong> Monday - Friday, 8:00 AM - 6:00 PM
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Emergency Notice -->
+                <div class="card border-danger bg-danger bg-opacity-10 mb-4">
+                    <div class="card-body p-4 text-center">
+                        <i class="fas fa-exclamation-triangle text-danger fa-2x mb-2"></i>
+                        <h6 class="text-danger mb-2">Emergency?</h6>
+                        <p class="small text-danger mb-3">For medical emergencies, don't wait for an appointment. Call 911 or visit our Emergency Department immediately.</p>
+                        <a href="tel:911" class="btn btn-danger">
+                            <i class="fas fa-phone me-1"></i>Call xxxxxxxxxx
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Department Hours -->
+                <div class="card border-0 shadow mb-4">
+                    <div class="card-body p-4">
+                        <h6 class="card-title text-primary mb-3">
+                            <i class="fas fa-clock me-2"></i>Department Hours
+                        </h6>
+                        <div class="small">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Emergency Medicine:</span>
+                                <span class="text-muted">24/7</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Cardiology:</span>
+                                <span class="text-muted">Mon-Fri 9AM-5PM</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Pediatrics:</span>
+                                <span class="text-muted">Tue, Thu, Sat 8AM-4PM</span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span>Orthopedics:</span>
+                                <span class="text-muted">Mon-Fri 10AM-6PM</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- What to Bring -->
+                <div class="card border-0 shadow">
+                    <div class="card-body p-4">
+                        <h6 class="card-title text-primary mb-3">
+                            <i class="fas fa-list-check me-2"></i>What to Bring
+                        </h6>
+                        <ul class="list-unstyled small">
+                            <li class="mb-2">
+                                <i class="fas fa-check text-success me-2"></i>Valid photo ID
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-check text-success me-2"></i>Insurance card
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-check text-success me-2"></i>List of current medications
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-check text-success me-2"></i>Previous medical records (if applicable)
+                            </li>
+                            <li class="mb-0">
+                                <i class="fas fa-check text-success me-2"></i>Form of payment for co-pays
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-6 fw-bold text-primary">How It Works</h2>
+            <p class="lead text-muted">Simple steps to book your appointment</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="text-center">
+                    <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <span class="fw-bold fs-3">1</span>
+                    </div>
+                    <h5>Fill the Form</h5>
+                    <p class="text-muted">Complete the appointment request form with your details and preferred time.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="text-center">
+                    <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <span class="fw-bold fs-3">2</span>
+                    </div>
+                    <h5>Get Confirmation</h5>
+                    <p class="text-muted">We'll contact you within 24 hours to confirm your appointment time.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="text-center">
+                    <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <span class="fw-bold fs-3">3</span>
+                    </div>
+                    <h5>Prepare for Visit</h5>
+                    <p class="text-muted">Gather required documents and arrive 15 minutes early for your appointment.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="text-center">
+                    <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <span class="fw-bold fs-3">4</span>
+                    </div>
+                    <h5>Meet Your Doctor</h5>
+                    <p class="text-muted">Receive professional medical care from our experienced healthcare team.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Set minimum date for appointment to tomorrow
+    const dateInput = document.getElementById('appointment_date');
+    if (dateInput) {
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        const minDate = tomorrow.toISOString().split('T')[0];
+        dateInput.setAttribute('min', minDate);
+    }
+});
+</script>
+{% endblock %}
