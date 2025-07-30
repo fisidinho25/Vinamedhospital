@@ -5,7 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase
 from werkzeug.middleware.proxy_fix import ProxyFix
 
-# Set up logging
+# Create logging in space
 logging.basicConfig(level=logging.DEBUG)
 
 class Base(DeclarativeBase):
