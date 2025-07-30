@@ -1,0 +1,207 @@
+{% extends "base.html" %}
+
+{% block title %}Departments - Vinamed Safeway Specialist Hospital{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="bg-primary text-white py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h1 class="display-5 fw-bold mb-3">Our Departments</h1>
+                <p class="lead mb-0">Comprehensive medical services across multiple specialties with state-of-the-art facilities and expert healthcare professionals.</p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <i class="fas fa-hospital fa-5x opacity-50"></i>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Departments Grid -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            {% for department in departments %}
+            <div class="col-lg-6 mb-5">
+                <div class="card h-100 shadow border-0 department-card">
+                    <div class="position-relative">
+                        <img src="{{ department.image_url }}" alt="{{ department.name }}" 
+                             class="card-img-top department-image">
+                        <div class="position-absolute top-0 start-0 m-3">
+                            <span class="badge bg-primary fs-6">
+                                <i class="fas fa-stethoscope me-1"></i>{{ department.name }}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="card-body p-4">
+                        <h3 class="card-title text-primary mb-3">{{ department.name }}</h3>
+                        <p class="card-text text-muted mb-4">{{ department.description }}</p>
+                        
+                        <!-- Department Features -->
+                        <div class="mb-4">
+                            <h6 class="text-dark mb-3">Services Include:</h6>
+                            <div class="row">
+                                <div class="col-6">
+                                    <ul class="list-unstyled">
+                                        {% if department.name == 'Emergency Medicine' %}
+                                            <li><i class="fas fa-check text-success me-2"></i>24/7 Emergency Care</li>
+                                            <li><i class="fas fa-check text-success me-2"></i>Trauma Center</li>
+                                            <li><i class="fas fa-check text-success me-2"></i>Critical Care</li>
+                                        {% elif department.name == 'Cardiology' %}
+                                            <li><i class="fas fa-check text-success me-2"></i>Heart Surgery</li>
+                                            <li><i class="fas fa-check text-success me-2"></i>Cardiac Catheterization</li>
+                                            <li><i class="fas fa-check text-success me-2"></i>Echocardiography</li>
+                                        {% elif department.name == 'Pediatrics' %}
+                                            <li><i class="fas fa-check text-success me-2"></i>Newborn Care</li>
+                                            <li><i class="fas fa-check text-success me-2"></i>Child Development</li>
+                                            <li><i class="fas fa-check text-success me-2"></i>Immunizations</li>
+                                        {% elif department.name == 'Orthopedics' %}
+                                            <li><i class="fas fa-check text-success me-2"></i>Joint Replacement</li>
+                                            <li><i class="fas fa-check text-success me-2"></i>Sports Medicine</li>
+                                            <li><i class="fas fa-check text-success me-2"></i>Spine Surgery</li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                                <div class="col-6">
+                                    <ul class="list-unstyled">
+                                        {% if department.name == 'Emergency Medicine' %}
+                                            <li><i class="fas fa-check text-success me-2"></i>Ambulance Services</li>
+                                            <li><i class="fas fa-check text-success me-2"></i>Emergency Surgery</li>
+                                        {% elif department.name == 'Cardiology' %}
+                                            <li><i class="fas fa-check text-success me-2"></i>Pacemaker Implants</li>
+                                            <li><i class="fas fa-check text-success me-2"></i>Heart Monitoring</li>
+                                        {% elif department.name == 'Pediatrics' %}
+                                            <li><i class="fas fa-check text-success me-2"></i>Adolescent Medicine</li>
+                                            <li><i class="fas fa-check text-success me-2"></i>Pediatric Surgery</li>
+                                        {% elif department.name == 'Orthopedics' %}
+                                            <li><i class="fas fa-check text-success me-2"></i>Arthroscopy</li>
+                                            <li><i class="fas fa-check text-success me-2"></i>Physical Therapy</li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Doctor Count -->
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div class="text-muted">
+                                <i class="fas fa-user-md me-1"></i>
+                                {{ department.doctors|length }} Specialist{{ 's' if department.doctors|length != 1 else '' }}
+                            </div>
+                            <div class="text-muted">
+                                <i class="fas fa-clock me-1"></i>
+                                {% if department.name == 'Emergency Medicine' %}
+                                    24/7 Available
+                                {% else %}
+                                    Mon-Sat Available
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <!-- Action Buttons -->
+                        <div class="d-flex gap-2">
+                            <a href="{{ url_for('doctors', department_id=department.id) }}" 
+                               class="btn btn-primary flex-fill">
+                                <i class="fas fa-users me-1"></i>View Doctors
+                            </a>
+                            <a href="{{ url_for('appointments') }}" 
+                               class="btn btn-outline-primary flex-fill">
+                                <i class="fas fa-calendar-plus me-1"></i>Book Appointment
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Emergency Services Banner -->
+<section class="py-5 bg-danger text-white">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h3 class="fw-bold mb-2">
+                    <i class="fas fa-exclamation-triangle me-2"></i>Emergency Services Available 24/7
+                </h3>
+                <p class="mb-0">For life-threatening emergencies, don't wait. Our emergency department is always open and ready to provide immediate care.</p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <a href="tel:080xxxxx" class="btn btn-light btn-lg">
+                    <i class="fas fa-phone me-2"></i>Call 080xxxxx Now
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Quality Assurance -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-6 fw-bold text-primary">Why Choose Our Departments?</h2>
+            <p class="lead text-muted">Excellence in every aspect of patient care</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="text-center">
+                    <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <i class="fas fa-award fa-2x"></i>
+                    </div>
+                    <h5>Accredited Care</h5>
+                    <p class="text-muted">All departments meet national quality standards</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="text-center">
+                    <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <i class="fas fa-microscope fa-2x"></i>
+                    </div>
+                    <h5>Advanced Technology</h5>
+                    <p class="text-muted">State-of-the-art medical equipment and facilities</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="text-center">
+                    <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <i class="fas fa-graduation-cap fa-2x"></i>
+                    </div>
+                    <h5>Expert Staff</h5>
+                    <p class="text-muted">Board-certified specialists with years of experience</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="text-center">
+                    <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <i class="fas fa-heart fa-2x"></i>
+                    </div>
+                    <h5>Patient-Centered</h5>
+                    <p class="text-muted">Compassionate care focused on your comfort</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.department-image {
+    height: 250px;
+    object-fit: cover;
+}
+
+.department-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.department-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1) !important;
+}
+</style>
+{% endblock %}
